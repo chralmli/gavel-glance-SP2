@@ -1,4 +1,4 @@
-import { fetchListings, fetchListingDetails } from '../auction/auction.js';
+import { fetchListings, fetchListingDetails } from '../api/auction/auction.js';
 import { isLoggedIn } from '../api/auth/auth.js';
 import { renderView } from '../ui/renderView.js';
 import * as views from '../views/index.js';
