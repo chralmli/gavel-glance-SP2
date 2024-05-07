@@ -8,7 +8,11 @@ const register = async (email, password) => {
 
 const login = async (email, password) => {
     const response = await post('auth/login', { email, password });
-    return response.json();
+    const data = await response.json();
+    if (data.token) {
+        localStorage.setItem('token', data.token);
+    }
+    return data;
 };
 
 const createApiKey = async (token) => {
@@ -17,4 +21,12 @@ const createApiKey = async (token) => {
     return response.json();
 };
 
-export { register, login, createApiKey };
+const isLoggedIn = () => {
+    return !!localStorage.getItem('token');
+};
+
+const logout = () => {
+    localStorage.removeItem('token');
+};
+
+export { register, login, logout, isLoggedIn, createApiKey };

@@ -1,8 +1,8 @@
-import { fetchAllListings } from '../api/auction/auction.js';
+import { fetchListings } from '../api/auction/auction.js';
 
 const displayAllListings = async () => {
     const container = document.getElementById('allListingsContainer');
-    const listings = await fetchAllListings();
+    const listings = await fetchListings();
     listings.data.forEach(listing => {
         container.appendChild(createListingCard(listing));
     });
