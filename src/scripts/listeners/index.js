@@ -26,7 +26,7 @@ const setupLoginListener = () => {
 const setupSearchListener = () => {
     const searchInput = document.getElementById('searchInput');
     const searchButton = document.getElementById('searchButton');
-    if (searchInpit && searchButton) {
+    if (searchInput && searchButton) {
         searchButton.addEventListener('click', async () => {
             const query = searchInput.value;
             try {
@@ -39,9 +39,9 @@ const setupSearchListener = () => {
     }
 };
 
-// Registration form listener
-const registrationForm = document.getElementById('registrationForm');
-registrationForm.addEventListener('submit', (event) => {
+// Register form listener
+const registerForm = document.getElementById('registerForm');
+registerForm.addEventListener('submit', (event) => {
     event.preventDefault();
     
     // Get form data

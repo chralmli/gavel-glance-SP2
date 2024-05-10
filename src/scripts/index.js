@@ -1,13 +1,13 @@
 import * as api from './api/index.js';
-import router from './router/index.js';
+import * as router from './router/index.js';
 import { setupListeners } from './listeners/index.js';
-import { displayFeaturedListings } from './templates/featuredListings.js';
-import { displayAllListings } from './templates/allListings.js';
+import { initializeUI } from './ui/index.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
     api.init();
     setupListeners();
-    await router();
-    displayFeaturedListings();
-    displayAllListings();
+    await router.setupRoutes();
+    initializeUI();
 });
+
+window.addEventListener('hashchange', () => router.navigateTo(window.location.hash));
