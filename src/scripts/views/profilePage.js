@@ -1,7 +1,7 @@
 export const profilePage = (profile) => {
     const appContainer = document.getElementById('appContainer');
     appContainer.innerHTML = `
-        <div class="bg-secondary-blue bg-hero-pattern bg-cover text-white py-8">
+        <div class="bg-secondary-blue bg-cover text-white py-8">
             <div class="container mx-auto flex justify-between items-center">
                 <div class="flex">
                     <img src="${profile.avatar.url}" alt="${profile.avatar.alt}" class="w-24 h-24 rounded-full border-4 border-primary-cream mr-4">

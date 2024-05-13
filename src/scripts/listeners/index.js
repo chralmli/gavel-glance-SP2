@@ -23,6 +23,25 @@ const setupLoginListener = () => {
     }
 };
 
+const setupRegisterListener = () => {
+    const registerForm = document.getElementById('registerForm');
+    if (registerForm) {
+        registerForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await register(name, email, password);
+                console.log('Registration successful:', response);
+            } catch (error) {
+                console.error('Registration failed:', error);
+            }
+        });
+    }
+};
+
 const setupSearchListener = () => {
     const searchInput = document.getElementById('searchInput');
     const searchButton = document.getElementById('searchButton');
@@ -39,38 +58,28 @@ const setupSearchListener = () => {
     }
 };
 
-// Register form listener
-const registerForm = document.getElementById('registerForm');
-registerForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-    
-    // Get form data
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    
-    // Perform registration logic
-    // ...
-});
-
 // Create listing form listener
-const createListingForm = document.getElementById('create-listing-form');
-createListingForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-    
-    // Get form data
-    const title = document.getElementById('title').value;
-    const description = document.getElementById('description').value;
-    const price = document.getElementById('price').value;
-    
-    // Perform create listing logic
-    // ...
-});
+const setupCreateListingListener = () => {
+    const createListingForm = document.getElementById('create-listing-form');
+    createListingForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        
+        // Get form data
+        const title = document.getElementById('title').value;
+        const description = document.getElementById('description').value;
+        const price = document.getElementById('price').value;
+        
+        // Perform create listing logic
+        // ...
+    });
+};
 
 // Main setup function that initializes all listeners
 const setupListeners = () => {
     setupLoginListener();
     setupSearchListener();
+    setupRegisterListener();
+    setupCreateListingListener();
 };
 
 export { setupListeners };

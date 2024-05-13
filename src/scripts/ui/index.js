@@ -6,8 +6,7 @@ function setupNavigation() {
     document.querySelectorAll('.navigation a').forEach(link => {
         link.addEventListener('click', (event) => {
             event.preventDefault();
-            const path = new URL(link.href).hash;
-            window.location.hash = path;
+            navigateTo(new URL(link.href).hash.slice(1));
         });
     });
 }

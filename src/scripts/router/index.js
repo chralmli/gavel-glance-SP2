@@ -5,8 +5,20 @@ import * as views from '../views/index.js';
 
 function handleRoute(hash) {
     switch(hash) {
+        case 'home':
+            renderView(views.homePage());
+            break;
+        case 'about':
+            renderView(views.aboutPage());
+            break;
+        case 'contact':
+            renderView(views.contactPage());
+            break;
         case 'listings':
-            fetchListings().then(listings => renderView(() => views.listingsPage(listings)));
+            fetchListings().then(listings => {
+                console.log('Fetched listings:', listings);
+                renderView(views.listingsPage(listings));
+            });
             break;
         case 'listing-details':
             const listingId = new URLSearchParams(window.location.search).get('id');
@@ -23,7 +35,8 @@ function handleRoute(hash) {
             renderView(views.registerPage());
             break;
         default:
-            fetchListings().then(listings => renderView(() => views.homePage(listings)));
+            console.log('No route matched, defaulting to home page');
+            renderView(views.homePage());
             break;
     }
 }

@@ -1,22 +1,19 @@
 import { fetchFeaturedListings } from '../api/auction/auction.js';
-import { renderView } from '../ui/renderView.js';
 
 const displayFeaturedListings = async () => {
     try {
         const listings = await fetchFeaturedListings();
-        const listingsHtml = listings.map(listing => `
-            <div class="card listing-card">
-                <img src="${listing.media[0]?.url || 'default-image.jpg'}" alt="${listing.media[0]?.alt} class="card-img-top">
-                <div class="listing-details">
-                    <h3>${listing.title}</h3>
-                    <small>Bids: ${listing._count.bids}</small>
-                </div>
-        `).join('');
-    
-        renderView(listingsHtml);
+        // Return the data for use elsewhere
+        return listings.map(listing => ( {
+            image: listing.media[0]?.url || 'https://via.placeholder.com/150',
+            title: listing.title,
+            description: `Current Bid: ${listing.currentBid}`,
+            bidCount: listing._count.bids
+        }));
     } catch (error) {
-        renderView(`<div>Error loading featured listings: ${error.message}</div>`)
+        console.error('Failed to fetch featured listings:', error.message);
+        return [];
     }
 };
 
-export { displayFeaturedListings };W
+export { displayFeaturedListings };
