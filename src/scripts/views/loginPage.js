@@ -1,3 +1,6 @@
+import { loginUser, createApiKey } from '../api/auth/auth.js';
+// import { API_KEY } from '../api/constants.js';
+
 export const loginPage = () => {
     const appContainer = document.getElementById('appContainer');
     appContainer.innerHTML = `
@@ -25,10 +28,20 @@ export const loginPage = () => {
             </div>
         </div>
     `;
-    document.getElementById('loginForm').addEventListener('submit', handleLoginSubmit);
-};
+    document.getElementById('loginForm').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
 
-function handleLoginSubmit(event) {
-    event.preventDefault();
-    // Login logic
-}
+        try {
+            await loginUser(email, password);
+            const apiKey = await createApiKey();
+            console.log('API Key:', apiKey);
+            alert('User logged in successfully!');
+            window.location.hash = 'home';
+        } catch (error) {
+            console.error('Error logging in user: ', error);
+            alert('Error logging in user. Please try again.');
+        }
+    });
+};

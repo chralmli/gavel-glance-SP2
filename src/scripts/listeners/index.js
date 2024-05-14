@@ -1,4 +1,4 @@
-import { login, register } from '../api/auth/auth.js';
+import { loginUser, registerUser } from '../api/auth/auth.js';
 import { searchListings } from '../api/auction/auction.js';
 import { displayAllListings } from '../templates/allListings';
 
@@ -14,7 +14,7 @@ const setupLoginListener = () => {
             const password = document.getElementById('password').value;
 
             try {
-                const response = await login(email, password);
+                const response = await loginUser(email, password);
                 console.log('Login successful:', response);
             } catch (error) {
                 console.error('Login failed:', error);
@@ -33,7 +33,7 @@ const setupRegisterListener = () => {
             const password = document.getElementById('password').value;
 
             try {
-                const response = await register(name, email, password);
+                const response = await registerUser(name, email, password);
                 console.log('Registration successful:', response);
             } catch (error) {
                 console.error('Registration failed:', error);

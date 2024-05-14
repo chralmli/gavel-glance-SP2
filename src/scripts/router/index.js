@@ -23,17 +23,20 @@ function handleRoute(hash) {
         case 'listing-details':
             const listingId = new URLSearchParams(window.location.search).get('id');
             if (!isLoggedIn()) {
-                renderView(views.loginPage());
+                renderView(views.loginPage(), false);
                 return;
             }
             fetchListingDetails(listingId).then(details => renderView(() => views.listingDetailsPage(details)));
             break;
         case 'login':
-            renderView(views.loginPage());
+            renderView(views.loginPage(), false);
             break;
         case 'register':
-            renderView(views.registerPage());
+            renderView(views.registerPage(), false);
             break;
+            case 'profile':
+                renderView(views.profilePage());
+                break;
         default:
             console.log('No route matched, defaulting to home page');
             renderView(views.homePage());

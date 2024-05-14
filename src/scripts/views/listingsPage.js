@@ -7,7 +7,20 @@ export const listingsPage = (listings) => {
 
     appContainer.innerHTML = `
         <div class="p-8">
-            <h1 class="text-2xl font-semibold text-gray-800 mb-6">All Listings</h1>
+            <h1 class="text-4xl font-semibold text-gray-800 mb-6 text-center">All Listings</h1>
+            <div class="flex justify-center mb-6">
+                <input tpe="text" placeholder="Search Listings" class="px-4 py-2 border rounded-l-lg w-1/3">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-r-lg">Search</button>
+            </div>
+            <div class="flex justify-center mb-6">
+                <div class="flex space-x-2">
+                    <p class="font-semibold text-gray-700 px-4 py-2 rounded">Filter items by:</p>
+                    <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded">Created Date</button>
+                    <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded">End Date</button>
+                    <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded">Number of Bids</button>
+                    <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded">Clear Filter(s)</button>
+                </div>
+            </div>
             ${userLoggedIn ? `
                 <div class="mb-8">
                     <h2 class="text-xl font-semibold mb-4">Create New Listing</h2>
@@ -22,7 +35,7 @@ export const listingsPage = (listings) => {
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 ${listings.map(listing => `
                     <div class="bg-white rounded-lg overflow-hidden shadow-lg">
-                        <img src="${listing.image}" alt="${listing.title}" class="w-full h-48 object-cover">
+                        <img src="${listing.media[0]?.url}" alt="${listing.title}" class="w-full h-48 object-cover">
                         <div class="p-4">
                             <h3 class="font-semibold text-lg text-secondary-500"${listing.title}</h3>
                             <p class="text-gray-600">Current Bid: ${listing.currentBid} credits</p>

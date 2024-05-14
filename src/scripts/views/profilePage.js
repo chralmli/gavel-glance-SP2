@@ -1,5 +1,9 @@
-export const profilePage = (profile) => {
+import { updateUserAvatar, getUserCredits } from '../api/auth/auth.js';
+
+export const profilePage = async () => {
     const appContainer = document.getElementById('appContainer');
+    const credits = await getUserCredits();
+
     appContainer.innerHTML = `
         <div class="bg-secondary-blue bg-cover text-white py-8">
             <div class="container mx-auto flex justify-between items-center">
@@ -33,4 +37,17 @@ export const profilePage = (profile) => {
             </div>
         </div>
     `;
+
+    document.getElementById('updateAvatarForm').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const avatarUrl = document.getElementById('avatarUrl').value;
+
+        try {
+            await updateUserAvatar(avatarUrl);
+            alert('Avatar updated successfully!');
+        } catch (error) {
+            console.error('Error updating avatar: ', error);
+            alert('Error updating avatar. Please try again.');
+        }
+    });
 };

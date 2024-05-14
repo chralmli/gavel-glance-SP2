@@ -15,14 +15,14 @@ class Carousel {
     renderItems() {
         this.items.forEach(item => {
             const carouselItem = document.createElement('div');
-            carouselItem.classList.add('carousel-item');
+            carouselItem.classList.add('carousel-item', 'flex-none', 'w-full', 'md:w-1/3', 'p-2', 'box-border', 'text-center', 'bg-white', 'rounded-lg', 'shadow-lg');
             carouselItem.innerHTML = `
-                <img src="${item.image}" alt="${item.title}" class="carousel-image">
-                <div class="carousel-item-content">
-                    <h4>${item.title}</h4>
-                    <p>${item.description}</p>
-                    <p>Bids: ${item.bidCount}</p>
-                    <button class="cta-btn">Bid Now</button>
+                <img src="${item.image}" alt="${item.title}" class="carousel-image w-full h-48 object-cover rounded-t-lg">
+                <div class="carousel-item-content p-4">
+                    <h4 class="text-lg font-semibold">${item.title}</h4>
+                    <p class="text-gray-600">${item.description}</p>
+                    <p class="text-gray-500">Bids: ${item.bidCount}</p>
+                    <button class="cta-btn bg-accent-blue hover:bg-secondary-blue text-white font-bold py-2 px-4 rounded mt-2">Bid Now</button>
                 </div>
             `;
             this.carouselContent.appendChild(carouselItem);
@@ -30,10 +30,11 @@ class Carousel {
     }
 
     moveCarousel(direction) {
+        const itemWidth = this.carouselContent.querySelector('.carousel-item').offsetWidth;
         this.currentIndex += direction;
         if (this.currentIndex < 0) this.currentIndex = this.items.length - 1;
         if (this.currentIndex >= this.items.length) this.currentIndex = 0;
-        this.carouselContent.style.transform = `translateX(-${this.currentIndex * 100}%)`;
+        this.carouselContent.style.transform = `translateX(-${this.currentIndex * itemWidth}px)`;
     }
 
     setupNavigation() {

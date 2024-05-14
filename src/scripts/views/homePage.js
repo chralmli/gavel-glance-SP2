@@ -12,10 +12,10 @@ export const homePage = async () => {
         </section>
         <section class="container mx-auto px-4 py-8 text-center">
             <h2 class="text-2xl font-bold mb-4">FEATURED LISTINGS</h2>
-            <div class="carousel">
-                <div class="carousel-content"></div>
-                <button class="carousel-prev">Prev</button>
-                <button class="carousel-next">Next</button>
+            <div class="carousel relative overflow-hidden w-full">
+                <div class="carousel-content flex transition-transform ease-in-out duration-500 space-x-4"></div>
+                <button class="carousel-prev absolute top-1/2 transform -translate-y-1/2 left-4 bg-black bg-opacity-50 text-white p-2 rounded-full">❮</button>
+                <button class="carousel-next absolute top-1/2 transform -translate-y-1/2 right-4 bg-black bg-opacity-50 text-white p-2 rounded-full">❯</button>
             </div>
         </section>
     `;
