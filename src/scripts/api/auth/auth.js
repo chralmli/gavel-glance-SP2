@@ -1,23 +1,40 @@
+import { post } from '../apiBase.js';
 import { getAuthHeaders } from "../headers.js";
 
-const registerUser = async (email, password, name, profileImage) => {
-    const response = await fetch('/api/register', {
-        method: 'POST',
+const registerUser = async (name, email, password, bio, avatar, venueManager) => {
+    const payload = {
+        name,
+        email,
+        password,
+        bio: bio || '',
+        venueManager: venueManager || false,
+    };
+
+    if (avatar) {
+        payload.avatar = avatar;
+    }
+
+    console.log("Payload being sent:", payload);
+    
+    const response = await post('auth/register', payload, {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email, password, name, profileImage }),
     });
 
-    if (!response.ok) {
-        throw new Error(`Failed to register user: ${response.status}`);
+    const data = await response.json();
+    console.log("Server response:", data);
+
+    if(response.status !== 201) {
+        const errorMessage = data.message || data.errors?.[0]?.message || 'Unknown error';
+        throw new Error(`Failed to register user: ${response.status} - ${errorMessage}`)
     }
 
-    return response.json();
+    return data;
 };
 
 const loginUser = async (email, password) => {
-    const response = await fetch('/api/login', {
+    const response = await fetch('auth/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
