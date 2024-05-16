@@ -1,46 +1,6 @@
-import { loginUser, registerUser } from '../api/auth/auth.js';
-import { searchListings } from '../api/auction/auction.js';
 import { displayAllListings } from '../templates/allListings';
-
-const setupLoginListener = () => {
-    // Login form listener
-    const loginForm = document.getElementById('loginForm');
-    if (loginForm) {
-        loginForm.addEventListener('submit', async (event) => {
-            event.preventDefault();
-            
-            // Get form data
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-
-            try {
-                const response = await loginUser(email, password);
-                console.log('Login successful:', response);
-            } catch (error) {
-                console.error('Login failed:', error);
-            }
-        });
-    }
-};
-
-const setupRegisterListener = () => {
-    const registerForm = document.getElementById('registerForm');
-    if (registerForm) {
-        registerForm.addEventListener('submit', async (event) => {
-            event.preventDefault();
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-
-            try {
-                const response = await registerUser(name, email, password);
-                console.log('Registration successful:', response);
-            } catch (error) {
-                console.error('Registration failed:', error);
-            }
-        });
-    }
-};
+import { setupRegisterListener } from './registerListener.js';
+import { setupLoginListener } from './loginListener.js';
 
 const setupSearchListener = () => {
     const searchInput = document.getElementById('searchInput');

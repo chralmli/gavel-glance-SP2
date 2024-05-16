@@ -2,6 +2,7 @@ import { fetchListings, fetchListingDetails } from '../api/auction/auction.js';
 import { isLoggedIn } from '../api/auth/auth.js';
 import { renderView } from '../ui/renderView.js';
 import * as views from '../views/index.js';
+import { authGuard } from './authGuard.js';
 
 function handleRoute(hash) {
     switch(hash) {
@@ -22,11 +23,9 @@ function handleRoute(hash) {
             break;
         case 'listing-details':
             const listingId = new URLSearchParams(window.location.search).get('id');
-            if (!isLoggedIn()) {
-                renderView(views.loginPage(), false);
-                return;
-            }
-            fetchListingDetails(listingId).then(details => renderView(() => views.listingDetailsPage(details)));
+            authGuard(() => {
+                fetchListingDetails(listingId).then(details => renderView(() => views.listingDetailsPage(details)));
+            })
             break;
         case 'login':
             renderView(views.loginPage(), false);
@@ -35,7 +34,7 @@ function handleRoute(hash) {
             renderView(views.registerPage(), false);
             break;
             case 'profile':
-                renderView(views.profilePage());
+                authGuard(() => renderView(views.profilePage()));
                 break;
         default:
             console.log('No route matched, defaulting to home page');

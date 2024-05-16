@@ -34,20 +34,25 @@ const registerUser = async (name, email, password, bio, avatar, venueManager) =>
 };
 
 const loginUser = async (email, password) => {
-    const response = await fetch('auth/login', {
-        method: 'POST',
+    const response = await post('auth/login', { email, password }, {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password }),
     });
 
+    const data = await response.json();
+
     if (!response.ok) {
-        throw new Error(`Failed to login user: ${response.status}`);
+        const errorMessage = data.message || data.errors?.[0]?.message || 'Unknown error';
+        throw new Error(`Failed to login user: ${response.status} - ${errorMessage}`);
     }
 
-    const data = await response.json();
-    localStorage.setItem('token', data.token);
+    if (data && data.data && data.data.accessToken) {
+        localStorage.setItem('token', data.data.accessToken);
+    } else {
+        throw new Error('No accessToken received from login response');
+    }
+
     return data;
 };
 
@@ -92,19 +97,23 @@ const getUserCredits = async () => {
 
 // Create API key
 const createApiKey = async () => {
-    const token = localStorage.getItem('token');
+    const token = getAccessToken();
 
-    const response = await fetch('/api/user/api-key', {
-        method: 'POST',
-        headers: getAuthHeaders()
+    const response = await post('auth/create-api-key', {}, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
     });
 
+    const data = await response.json();
+
     if (!response.ok) {
-        throw new Error(`Failed to create API key: ${response.status}`);
+        const errorMessage = data.message || data.errors?.[0]?.message || 'Unknown error';
+        throw new Error(`Failed to create API key: ${response.status} - ${errorMessage}`);
     }
 
-    const data = await response.json();
-    return data.apiKey;
+    return data.data.key;
 };
 
 
