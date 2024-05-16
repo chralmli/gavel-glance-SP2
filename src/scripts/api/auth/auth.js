@@ -49,6 +49,7 @@ const loginUser = async (email, password) => {
 
     if (data && data.data && data.data.accessToken) {
         localStorage.setItem('token', data.data.accessToken);
+        localStorage.setItem('username', data.data.user.name);
     } else {
         throw new Error('No accessToken received from login response');
     }
@@ -58,6 +59,7 @@ const loginUser = async (email, password) => {
 
 const logoutUser = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('username');
 };
 
 const isLoggedIn = () => {
@@ -68,32 +70,74 @@ const getAccessToken = () => {
     return localStorage.getItem('token');
 };
 
-const updateUserAvatar = async (avatarUrl) => {
-    const response = await fetch('/api/user/avatar', {
-        method: 'PUT',
-        headers: getAuthHeaders(),
-        body: JSON.stringify({ avatarUrl }),
+// Get user profile
+const getUserProfile = async () => {
+    const username = localStorage.getItem('username');
+    const token = localStorage.getItem('token');
+    const response = await fetch(`auction/profiles/${username}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        }
     });
-
     if (!response.ok) {
-        throw new Error(`Failed to update user avatar: ${response.status}`);
+        throw new Error(`Failed to get user profile: ${response.status}`);
     }
+    const data = await response.json();
+    return data.data;
+}
 
-    return response.json();
-};
-
-const getUserCredits = async () => {
-    const response = await fetch('/api/user/credits', {
-        headers: getAuthHeaders(),
+// Update user profile
+const updateUserProfile = async (profileUpdates) => {
+    const username = localStorage.getItem('username');
+    const token = localStorage.getItem('token');
+    const response = await fetch(`auction/profiles/${username}`, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(profileUpdates)
     });
+    if (!response.ok) {
+        throw new Error(`Failed to update user profile: ${response.status}`);
+    }
+    return response.json();
+}
 
+// Get user credits
+const getUserCredits = async () => {
+    const username = localStorage.getItem('username');
+    const token = localStorage.getItem('token');
+    const response = await fetch(`auction/profiles/${username}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        }
+    });
     if (!response.ok) {
         throw new Error(`Failed to get user credits: ${response.status}`);
     }
-
     const data = await response.json();
-    return data.credits;
+    return data.data.credits;
 }
+
+// // Update user credits
+// const updateCredits = async (amount) => {
+//     const username = localStorage.getItem('username');
+//     const token = localStorage.getItem('token');
+//     const response = await fetch(`auction/profiles/${username}`, {
+//         method: 'PUT',
+//         headers: {
+//             'Authorization': `Bearer ${token}`,
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ amount: amount })
+//     });
+//     if (!response.ok) {
+//         throw new Error(`Failed to update user credits: ${response.status}`);
+//     }
+//     return response.json();
+// };
 
 // Create API key
 const createApiKey = async () => {
@@ -117,4 +161,4 @@ const createApiKey = async () => {
 };
 
 
-export { registerUser, loginUser, logoutUser, isLoggedIn, createApiKey, updateUserAvatar, getUserCredits, getAccessToken };
+export { registerUser, loginUser, logoutUser, isLoggedIn, createApiKey, getUserProfile, updateUserProfile, getUserCredits, getAccessToken };

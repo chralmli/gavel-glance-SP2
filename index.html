@@ -20,9 +20,21 @@
                 <a href="#listings" class="text-accent-blue hover:text-gray-800 mx-2">All Listings</a>
                 <a href="#contact" class="text-accent-blue hover:text-gray-800 mx-2">Contact</a>
             </div>
-            <div class="user-actions">
+            <div class="user-actions flex items-center">
                 <a id="authLink" href="#login" class="text-accent-blue hover:text-blue-800-mx-2">Login</a>
-                <a href="#register" class="text-accent-blue hover:text-blue-800-mx-2">Register</a>
+                <a id="registerLink" href="#register" class="text-accent-blue hover:text-blue-800-mx-2">Register</a>
+                <div class="relative hidden" id="profileContainer">
+                    <img src="./src/assets/avatar-image.png" alt="Profile Avatar" id="profileAvatar" class="w-10 h-10 rounded-full cursor-pointer">
+                    <div id="profileDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-20 hidden">
+                        <div class="px-4 py-2">
+                            <p id="profileName" class="text-gray-800"></p>
+                            <p id="profileCredits" class="text-gray-600"></p>
+                        </div>
+                        <div class="border-t border-gray-200"></div>
+                        <a href="#profile" class="block px-4 py-2 text-gray hover:bg-gray-100">Profile</a>
+                        <a href="#logout" id="logoutLink" class="block px-4 py-2 text-gray hover:bg-gray-100">Logout</a>
+                    </div>
+                </div>
             </div>
         </nav>
     </header>

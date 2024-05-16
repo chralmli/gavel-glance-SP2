@@ -1,7 +1,8 @@
-import { updateUserAvatar, getUserCredits } from '../api/auth/auth.js';
+import { updateUserProfile, getUserCredits } from '../api/auth/auth.js';
 
 export const profilePage = async () => {
     const appContainer = document.getElementById('appContainer');
+    const profile = await getProfileData();
     const credits = await getUserCredits();
 
     appContainer.innerHTML = `
@@ -30,7 +31,7 @@ export const profilePage = async () => {
                         <p>Wins</p>
                     </div>
                     <div class="text-center">
-                        <h3 class="text-xl font-semibold">${profile.credits}</h3>
+                        <h3 class="text-xl font-semibold">${credits}</h3>
                         <p>Credits</p>
                     </div>
                 </div>
@@ -38,16 +39,40 @@ export const profilePage = async () => {
         </div>
     `;
 
-    document.getElementById('updateAvatarForm').addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const avatarUrl = document.getElementById('avatarUrl').value;
+    const updateAvatarForm = document.getElementById('updateAvatarForm');
+    if (updateAvatarForm) {
+        updateAvatarForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const avatarUrl = document.getElementById('avatarUrl').value;
 
-        try {
-            await updateUserAvatar(avatarUrl);
-            alert('Avatar updated successfully!');
-        } catch (error) {
-            console.error('Error updating avatar: ', error);
-            alert('Error updating avatar. Please try again.');
-        }
-    });
+            try {
+                await updateUserProfile({ avatar: { url: avatarUrl } });
+                alert('Avatar updated successfully!');
+            } catch (error) {
+                console.error('Error updating avatar: ', error);
+                alert('Error updating avatar. Please try again.');
+            }
+        });
+    }
 };
+
+async function getProfileData() {
+    try {
+        const username = localStorage.getItem('username');
+        const response = await fetch(`auction/profiles/${username}`, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        });
+        const responseText = await response.text();
+        console.log('Response text: ', responseText);
+        if (!response.ok) {
+            throw new Error(`API responded with status ${response.status}`);
+        }
+        const profileData = JSON.parse(responseText);
+        return profileData.data;
+    } catch (error) {
+        console.error('Failed to fetch profile data: ', error);
+        throw error;
+    }
+}

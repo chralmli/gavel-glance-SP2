@@ -3,7 +3,7 @@ import { getAuthHeaders } from "../headers.js";
 
 const fetchListings = async () => {
     try {
-        const response = await get('auction/listings');
+        const response = await get('auction/listings?_bids=true');
         if (!response.ok) {
             throw new Error(`API responded with status ${response.status}`);
         }
@@ -37,7 +37,7 @@ const searchListings = async (query) => {
 
 const fetchFeaturedListings = async () => {
     try {
-        const response = await get('auction/listings');
+        const response = await get('auction/listings?_bids=true');
         if (!response.ok) {
             throw new Error(`API responded with status ${response.status}`);
         }
@@ -57,16 +57,16 @@ const fetchListingsByTag = async (tag) => {
     return response.json();
 };
 
-const fetchListingDetails = async (listingId, token, apiKey) => {
-    const headers = getAuthHeaders(token, apiKey);
+const fetchListingDetails = async (listingId, params = {}) => {
     try {
-        const response = await get(`auction/listings/${listingId}`, { headers });
+        const query = new URLSearchParams(params).toString();
+        const response = await get(`auction/listings/${listingId}?${query}`);
         if (!response.ok) {
             throw new Error(`API responded with status ${response.status}`);
         }
         const listingDetails = await response.json();
-        console.log("API response data:", details);
-        return listingDetails;
+        console.log("API response data:", listingDetails);
+        return listingDetails.data;
     } catch (error) {
         console.error("Error fetching listing details:", error);
         throw error;

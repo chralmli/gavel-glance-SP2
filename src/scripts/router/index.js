@@ -1,11 +1,14 @@
 import { fetchListings, fetchListingDetails } from '../api/auction/auction.js';
-import { isLoggedIn } from '../api/auth/auth.js';
+import { updateNavigation } from '../ui/navigation.js';
 import { renderView } from '../ui/renderView.js';
 import * as views from '../views/index.js';
 import { authGuard } from './authGuard.js';
 
 function handleRoute(hash) {
-    switch(hash) {
+    const [route, query] = hash.split('?');
+    const params = new URLSearchParams(query);
+
+    switch(route) {
         case 'home':
             renderView(views.homePage());
             break;
@@ -22,10 +25,18 @@ function handleRoute(hash) {
             });
             break;
         case 'listing-details':
-            const listingId = new URLSearchParams(window.location.search).get('id');
-            authGuard(() => {
-                fetchListingDetails(listingId).then(details => renderView(() => views.listingDetailsPage(details)));
-            })
+            const listingId = params.get('id');
+            if (listingId) {
+                    fetchListingDetails(listingId, { _seller: true, _bids: true })
+                    .then(details => renderView(views.listingDetailsPage(details)))
+                    .catch(error => {
+                        console.error("Error fetching listing details:", error);
+                        renderView('<p>Error loading listing details. Please try again later.</p>')
+                    });
+            } else {
+                console.log('No listing ID found, redirecting to home');
+                renderView(views.homePage());
+            }
             break;
         case 'login':
             renderView(views.loginPage(), false);
@@ -33,9 +44,9 @@ function handleRoute(hash) {
         case 'register':
             renderView(views.registerPage(), false);
             break;
-            case 'profile':
-                authGuard(() => renderView(views.profilePage()));
-                break;
+        case 'profile':
+            authGuard(() => renderView(views.profilePage()));
+            break;
         default:
             console.log('No route matched, defaulting to home page');
             renderView(views.homePage());
@@ -54,5 +65,8 @@ export function navigateTo(newHash) {
     handleRoute(newHash.slice(1));
 }
 
-window.addEventListener('hashchange', () => navigateTo(window.location.hash));
+window.addEventListener('hashchange', () => {
+    navigateTo(window.location.hash);
+    updateNavigation();
+});
 document.addEventListener('DOMContentLoaded', setupRoutes);
