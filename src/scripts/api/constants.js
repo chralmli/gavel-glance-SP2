@@ -1,1 +1,1 @@
-export const API_KEY = 'generated-api-key';
+export const API_KEY = '36186317-057c-45c0-b87f-a7a841965e07';

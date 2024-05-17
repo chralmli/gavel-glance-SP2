@@ -1,4 +1,6 @@
 import { updateUserProfile, getUserCredits } from '../api/auth/auth.js';
+import { API_BASE_URL } from '../api/apiBase.js';
+import { API_KEY } from '../api/constants.js';
 
 export const profilePage = async () => {
     const appContainer = document.getElementById('appContainer');
@@ -59,9 +61,15 @@ export const profilePage = async () => {
 async function getProfileData() {
     try {
         const username = localStorage.getItem('username');
-        const response = await fetch(`auction/profiles/${username}`, {
+        if (!username) {
+            throw new Error('Username not found in local storage');
+        }
+        console.log(`Fetching profile data for user: ${username}`);
+        const response = await fetch(`${API_BASE_URL}auction/profiles/${username}`, {
             headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'X-Noroff-API-Key': API_KEY,
+                'Accept': 'application/json'
             }
         });
         const responseText = await response.text();
@@ -69,7 +77,7 @@ async function getProfileData() {
         if (!response.ok) {
             throw new Error(`API responded with status ${response.status}`);
         }
-        const profileData = JSON.parse(responseText);
+        const profileData = responseText ? JSON.parse(responseText) : {};
         return profileData.data;
     } catch (error) {
         console.error('Failed to fetch profile data: ', error);

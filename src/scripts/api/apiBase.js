@@ -16,4 +16,4 @@ function del(url, options = {}) {
     return fetch(API_BASE_URL + url, { ...options, method: "DELETE" });
 }
 
-export { get, post, put, del };
+export { API_BASE_URL, get, post, put, del };

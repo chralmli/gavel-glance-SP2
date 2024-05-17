@@ -1,5 +1,7 @@
 import { post } from '../apiBase.js';
 import { getAuthHeaders } from "../headers.js";
+import { API_BASE_URL } from '../apiBase.js';
+import { API_KEY } from '../constants.js';
 
 const registerUser = async (name, email, password, bio, avatar, venueManager) => {
     const payload = {
@@ -33,6 +35,7 @@ const registerUser = async (name, email, password, bio, avatar, venueManager) =>
     return data;
 };
 
+// Login user
 const loginUser = async (email, password) => {
     const response = await post('auth/login', { email, password }, {
         headers: {
@@ -41,6 +44,7 @@ const loginUser = async (email, password) => {
     });
 
     const data = await response.json();
+    console.log("Login response data:", data);
 
     if (!response.ok) {
         const errorMessage = data.message || data.errors?.[0]?.message || 'Unknown error';
@@ -49,7 +53,7 @@ const loginUser = async (email, password) => {
 
     if (data && data.data && data.data.accessToken) {
         localStorage.setItem('token', data.data.accessToken);
-        localStorage.setItem('username', data.data.user.name);
+        localStorage.setItem('username', data.data.name);
     } else {
         throw new Error('No accessToken received from login response');
     }
@@ -74,9 +78,10 @@ const getAccessToken = () => {
 const getUserProfile = async () => {
     const username = localStorage.getItem('username');
     const token = localStorage.getItem('token');
-    const response = await fetch(`auction/profiles/${username}`, {
+    const response = await fetch(`${API_BASE_URL}auction/profiles/${username}`, {
         headers: {
             Authorization: `Bearer ${token}`,
+            'X-Noroff-API-Key': API_KEY,
             'Content-Type': 'application/json',
         }
     });
@@ -91,10 +96,11 @@ const getUserProfile = async () => {
 const updateUserProfile = async (profileUpdates) => {
     const username = localStorage.getItem('username');
     const token = localStorage.getItem('token');
-    const response = await fetch(`auction/profiles/${username}`, {
+    const response = await fetch(`${API_BASE_URL}auction/profiles/${username}`, {
         method: 'PUT',
         headers: {
             'Authorization': `Bearer ${token}`,
+            'X-Noroff-API-Key': API_KEY,
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(profileUpdates)
@@ -109,9 +115,10 @@ const updateUserProfile = async (profileUpdates) => {
 const getUserCredits = async () => {
     const username = localStorage.getItem('username');
     const token = localStorage.getItem('token');
-    const response = await fetch(`auction/profiles/${username}`, {
+    const response = await fetch(`${API_BASE_URL}auction/profiles/${username}`, {
         headers: {
             'Authorization': `Bearer ${token}`,
+            'X-Noroff-API-Key': API_KEY,
         }
     });
     if (!response.ok) {
