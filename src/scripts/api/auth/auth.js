@@ -128,24 +128,6 @@ const getUserCredits = async () => {
     return data.data.credits;
 }
 
-// // Update user credits
-// const updateCredits = async (amount) => {
-//     const username = localStorage.getItem('username');
-//     const token = localStorage.getItem('token');
-//     const response = await fetch(`auction/profiles/${username}`, {
-//         method: 'PUT',
-//         headers: {
-//             'Authorization': `Bearer ${token}`,
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({ amount: amount })
-//     });
-//     if (!response.ok) {
-//         throw new Error(`Failed to update user credits: ${response.status}`);
-//     }
-//     return response.json();
-// };
-
 // Create API key
 const createApiKey = async () => {
     const token = getAccessToken();

@@ -44,7 +44,22 @@ function handleLoginClick() {
 
 function toggleDropdown() {
     const profileDropdown = document.getElementById('profileDropdown');
-    profileDropdown.classList.toggle('hidden');
+    const isHidden = profileDropdown.classList.toggle('hidden');
+
+    if (!isHidden) {
+        document.addEventListener('click', handleClickOutside);
+    } else {
+        document.removeEventListener('click', handleClickOutside);
+    }
+}
+
+const handleClickOutside = (event) => {
+    const profileDropdown = document.getElementById('profileDropdown');
+    const profileAvatar = document.getElementById('profileAvatar');
+    if (!profileDropdown.contains(event.target) && !profileAvatar.contains(event.target)) {
+        profileDropdown.classList.add('hidden');
+        document.removeEventListener('click', handleClickOutside);
+    }
 }
 
 export { updateNavigation };

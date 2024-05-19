@@ -1,4 +1,5 @@
 import { footer } from '../views/footer.js';
+
 export const renderView = (content, includeFooter = true) => {
     const appContainer = document.getElementById('appContainer');
     if (typeof content === 'string') {

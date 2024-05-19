@@ -31,7 +31,7 @@ const createListingModalHtml = () => `
                     <input type="text" id="imageInput" placeholder="Image URL" class="block w-full mb-2 px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-secondary-blue focus:border-secondary-blue sm:text-sm"/>
                     <input type="text" placeholder="Image Alt Text" id="imageAltInput" class="block w-full px-3 py-2 border rounded" shadow-sm focus:outline-none focus:ring-secondary-blue focus:border-secondary-blue sm:text-sm/>
 
-                    <button type="submit" class="bg-transparent hover:bg-accent-blue text-secondary-blue font-bold py-2 px-4 rounded">Create Listing"</button>
+                    <button type="submit" class="bg-transparent hover:bg-accent-blue text-secondary-blue font-bold py-2 px-4 rounded">Create Listing</button>
                 </form>
             </div>
         </div>
@@ -67,7 +67,6 @@ const bidModalHtml = () => `
 
 // Function to open the bid modal and populate it with listing details
 export const openBidModal = async (listing) => {
-    console.log('Opening bid modal for listing', listing);
 
     appContainer.insertAdjacentHTML('beforeend', bidModalHtml());
     const bidModal = document.getElementById('bidModal');
@@ -175,10 +174,10 @@ export const listingsPage = async (page = 1, loadMore = false) => {
                     <div class="flex justify-center mb-6">
                         <div class="flex space-x-2">
                             <p class="font-semibold text-gray-700 px-4 py-2 rounded">Filter items by:</p>
-                            <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded">Created Date</button>
-                            <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded">End Date</button>
-                            <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded">Number of Bids</button>
-                            <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded">Clear Filter(s)</button>
+                            <button id="filterByCreatedDate" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded">Newest First</button>
+                            <button id="filterByEndDate" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded">Ending Soon</button>
+                            <button id="filterByNumberOfBids" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded">Most Bids</button>
+                            <button id="clearFilters" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded">Clear Filters</button>
                         </div>
                     </div>
                     <div id="listingsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -224,6 +223,12 @@ const attachEventListeners = (userLoggedIn) => {
             openBidModalHandler(listingId, userLoggedIn);
         });
     });
+
+    // Attach filter event listeners
+    document.getElementById('filterByCreatedDate').addEventListener('click', filterByCreatedDate);
+    document.getElementById('filterByEndDate').addEventListener('click', filterByEndDate);
+    document.getElementById('filterByNumberOfBids').addEventListener('click', filterByNumberOfBids);
+    document.getElementById('clearFilters').addEventListener('click', clearFilters);
 };
 
 const openCreateListingModal = () => {
@@ -276,11 +281,21 @@ const createListingHandler = async (event) => {
     const listingDetails = { title, description, startingBid, endsAt, imageInput, imageAltInput };
 
     try {
-        await createListing(listingDetails);
+        const newListing = await createListing(listingDetails);
         alert('Listing created successfully');
         const createListingModal = document.getElementById('createListingModal');
         createListingModal.remove();
-        await listingsPage();
+
+        if (newListing) {
+            // Add new listing to the listings array and sort by created date
+            listings.unshift(newListing);
+            listings.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+            // update the listings grid
+            updateListingsGrid(listings);
+        } else {
+            throw new Error('Failed to create listing');
+        }
     } catch (error) {
         console.error('Error creating listing:', error);
         alert('Error creating listing. Please try again later or ensure all fields are filled out correctly.');
@@ -314,6 +329,36 @@ const searchListingsHandler = async () => {
             console.error('Error searching listings:', error);
             alert('Failed to search listings. Please try again later.');
         }
+    }
+};
+
+// Filter listings by created date
+const filterByCreatedDate = () => {
+    const sortedListings = [...listings].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    updateListingsGrid(sortedListings);
+};
+
+const filterByEndDate = () => {
+    const sortedListings = [...listings].sort((a, b) => new Date(a.endsAt) - new Date(b.endsAt));
+    updateListingsGrid(sortedListings);
+};
+
+const filterByNumberOfBids = () => {
+    const sortedListings = [...listings].sort((a, b) => (b.bids.length || 0) - (a.bids.length || 0));
+    updateListingsGrid(sortedListings);
+};
+
+const clearFilters = () => {
+    updateListingsGrid(listings);
+}
+
+const updateListingsGrid = (filteredListings) => {
+    const listingsGrid = document.getElementById('listingsGrid');
+    if (listingsGrid) {
+        listingsGrid.innerHTML = renderListingsGrid(filteredListings, isLoggedIn());
+        attachEventListeners(isLoggedIn());
+    } else {
+        console.error('Listings grid not found');
     }
 };
 

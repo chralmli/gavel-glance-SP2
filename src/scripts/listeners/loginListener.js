@@ -14,7 +14,6 @@ const setupLoginListener = () => {
             try {
                 await loginUser(email, password);
                 const apiKey = await createApiKey();
-                console.log('API key:', apiKey);
                 alert('User logged in successfully!');
                 updateNavigation();
                 window.location.hash = 'home';

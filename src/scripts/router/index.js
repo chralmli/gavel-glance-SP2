@@ -15,13 +15,13 @@ function handleRoute(hash) {
             break;
         case 'about':
             renderView(views.aboutPage());
+
             break;
         case 'contact':
             renderView(views.contactPage());
             break;
         case 'listings':
             fetchListings().then(listings => {
-                console.log('Fetched listings:', listings);
                 renderView(views.listingsPage(listings));
             });
             break;
@@ -35,7 +35,6 @@ function handleRoute(hash) {
                         renderView('<p>Error loading details. Please try again later.</p>')
                     });
             } else {
-                console.log('No listing ID found, redirecting to home');
                 renderView(views.homePage());
             }
             break;
@@ -49,7 +48,6 @@ function handleRoute(hash) {
             authGuard(() => renderView(views.profilePage()));
             break;
         default:
-            console.log('No route matched, defaulting to home page');
             renderView(views.homePage());
             break;
     }
@@ -57,17 +55,20 @@ function handleRoute(hash) {
 
 // set up initial routing and handle subsequent hash changes
 export function setupRoutes() {
-    handleRoute(window.location.hash.slice(1) || 'home');
+    const initialHash = window.location.hash.slice(1);
+    handleRoute(initialHash || 'home');
 }
 
 // handle navigation to different parts of the site
 export function navigateTo(newHash) {
     window.location.hash = newHash;
-    handleRoute(newHash.slice(1));
+    const cleanedHash = newHash.startsWith('#') ? newHash.slice(1) : newHash;
+    handleRoute(cleanedHash);
 }
 
 window.addEventListener('hashchange', () => {
-    navigateTo(window.location.hash);
+    const currentHash = window.location.hash;
+    navigateTo(currentHash);
     updateNavigation();
 });
 document.addEventListener('DOMContentLoaded', setupRoutes);

@@ -24,7 +24,7 @@ export const listingDetailsPage = (listing) => {
                         <p class="text-gray-600">Time Left: ${timeLeft}</p>
                     </div>
                     <div class="mt-6">
-                        <input type="number" id="bidAmount" class="border rounded px-4 py-2 w-32 text-lg" placeholder="160">
+                        <input type="number" id="bidAmount" class="border rounded px-4 py-2 w-32 text-lg" placeholder="Your Bid">
                         <button id="placeBidButton" class="bg-secondary-blue hover:bg-accent-blue text-white font-bold py-2 px-6 rounded-lg inline-flex items-center">
                             <span>Place Bid</span>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">

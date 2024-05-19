@@ -51,7 +51,6 @@ const setupRegisterListener = () => {
         
             try {
                 const response = await registerUser(name, email, password, bio, avatar, venueManager);
-                console.log('Registration successful', response);
                 alert('User registered successfully!');
                 window.location.hash = 'login';
             } catch (error) {
