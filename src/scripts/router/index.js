@@ -3,6 +3,7 @@ import { updateNavigation } from '../ui/navigation.js';
 import { renderView } from '../ui/renderView.js';
 import * as views from '../views/index.js';
 import { authGuard } from './authGuard.js';
+import { listingDetailsPage } from '../views/listingDetails.js';
 
 function handleRoute(hash) {
     const [route, query] = hash.split('?');
@@ -28,10 +29,10 @@ function handleRoute(hash) {
             const listingId = params.get('id');
             if (listingId) {
                     fetchListingDetails(listingId, { _seller: true, _bids: true })
-                    .then(details => renderView(views.listingDetailsPage(details)))
+                    .then(details => listingDetailsPage(details))
                     .catch(error => {
-                        console.error("Error fetching listing details:", error);
-                        renderView('<p>Error loading listing details. Please try again later.</p>')
+                        console.error('Error fetching listing details:', error);
+                        renderView('<p>Error loading details. Please try again later.</p>')
                     });
             } else {
                 console.log('No listing ID found, redirecting to home');

@@ -18,28 +18,11 @@ const setupSearchListener = () => {
     }
 };
 
-// Create listing form listener
-const setupCreateListingListener = () => {
-    const createListingForm = document.getElementById('create-listing-form');
-    createListingForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        
-        // Get form data
-        const title = document.getElementById('title').value;
-        const description = document.getElementById('description').value;
-        const price = document.getElementById('price').value;
-        
-        // Perform create listing logic
-        // ...
-    });
-};
-
 // Main setup function that initializes all listeners
 const setupListeners = () => {
     setupLoginListener();
     setupSearchListener();
     setupRegisterListener();
-    setupCreateListingListener();
 };
 
 export { setupListeners };

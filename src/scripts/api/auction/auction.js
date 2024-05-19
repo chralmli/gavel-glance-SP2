@@ -1,29 +1,83 @@
 import { get, post } from "../apiBase.js";
 import { getAuthHeaders } from "../headers.js";
+import { API_KEY } from "../constants.js";
 
-const fetchListings = async () => {
+const fetchListings = async (page = 1, limit = 10) => {
     try {
-        const response = await get('auction/listings?_bids=true');
+        const response = await get(`auction/listings?_page=${page}&_limit=${limit}&_bids=true`);
+
         if (!response.ok) {
             throw new Error(`API responded with status ${response.status}`);
         }
-        const listings = await response.json();
-        console.log("API response data:", listings);
-        return listings.data;
+
+        const listingsData = await response.json();
+
+        console.log("API response data:", listingsData);
+
+        return {
+            data: listingsData.data,
+            meta: listingsData.meta,
+        };
     } catch (error) {
         console.error("Failed to fetch listings:", error);
         throw error;
     }
 };
 
-const createListing = async (token, apiKey, listingDetails) => {
-    const headers = getAuthHeaders(token, apiKey);
-    return post('auction/listings', listingDetails, { headers }).then(res => res.json());
+const createListing = async (listingDetails) => {
+    const token = localStorage.getItem('token');
+    const headers = {
+        'Content-Type': 'application/json',
+        'X-Noroff-API-Key': API_KEY,
+        'Authorization': `Bearer ${token}`
+    };
+
+    const endsAtDate = new Date(listingDetails.endsAt);
+    const currentDate = new Date();
+    const maxDate = new Date(currentDate.getTime() + 365 * 24 * 60 * 60 * 1000);
+
+    if (endsAtDate < currentDate || endsAtDate > maxDate) {
+        throw new Error('End date must be between today and one year from now');
+    }
+
+    const formattedListingDetails = {
+        title: listingDetails.title,
+        description: listingDetails.description,
+        tags: [],
+        media: [{
+            url: listingDetails.imageInput,
+            alt: listingDetails.imageAltInput
+        }],
+        endsAt: endsAtDate.toISOString(),
+    };
+
+    const response = await post('auction/listings', formattedListingDetails, { headers });
+    
+    if (!response.ok) {
+        throw new Error(`API responded with status ${response.status}`);
+    }
 };
 
-const addBid = async (token, apiKey, listingId, bidAmount) => {
-    const headers = getAuthHeaders(token, apiKey);
-    return post(`auction/listings/${listingId}/bids`, { bidAmount }, { headers }).then(res => res.json());
+const addBid = async (listingId, bidAmount) => {
+    try {
+        const token = localStorage.getItem('token');
+        const headers = {
+            'Content-Type': 'application/json',
+            'X-Noroff-API-Key': API_KEY,
+            'Authorization': `Bearer ${token}`
+        }
+
+        const response = await post(`auction/listings/${listingId}/bids`, { amount: bidAmount }, { headers });
+        if (!response.ok) {
+            throw new Error(`API responded with status ${response.status}`);
+        }
+        const bidResponse = await response.json();
+        console.log("Bid response data:", bidResponse);
+        return bidResponse.data;
+    } catch (error) {
+        console.error("Failed to add bid:", error);
+        throw error;
+    }
 };
 
 const viewBids = async (token, apiKey, listingId) => {
@@ -32,8 +86,20 @@ const viewBids = async (token, apiKey, listingId) => {
 }
 
 const searchListings = async (query) => {
-    return get(`auction/listings?search=${query}`).then(res => res.json());
-}
+    try {
+        const response = await get(`auction/listings?_tag=name&title_like=${encodeURIComponent(query)}&_bids=true`);
+        if (!response.ok) {
+            throw new Error(`API responded with status ${response.status}`);
+        }
+        const searchResults = await response.json();
+        console.log("Search results:", searchResults);
+
+        return Array.isArray(searchResults.data) ? searchResults.data : [];
+    } catch (error) {
+        console.error("Failed to search listings:", error);
+        throw error;
+    }
+};
 
 const fetchFeaturedListings = async () => {
     try {

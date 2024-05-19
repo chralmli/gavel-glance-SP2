@@ -9,10 +9,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupListeners();
     await router.setupRoutes();
     initializeUI();
-    updateNavigation();
+    await updateNavigation();
 });
 
-window.addEventListener('hashchange', () => {
+window.addEventListener('hashchange', async () => {
     router.navigateTo(window.location.hash);
-    updateNavigation();
+    await updateNavigation();
 });

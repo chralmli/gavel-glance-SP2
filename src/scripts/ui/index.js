@@ -1,3 +1,4 @@
+import { navigateTo } from "../router/index.js";
 export function initializeUI() {
     setupNavigation();
 }
