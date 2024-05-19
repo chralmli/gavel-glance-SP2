@@ -12,7 +12,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ./src",
     "test:unit": "jest",
-    "test:e2e": "cypress run"
+    "test:e2e": "cypress run",
+    "test:all": "npm run test:unit && npm run test:e2e"
   },
   "keywords": [],
   "author": "",

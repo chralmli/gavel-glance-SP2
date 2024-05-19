@@ -1,77 +1,96 @@
-name: Continuous Integration - Auction Website
-on: [pull_request]
+# name: Continuous Integration - Auction Website - Semester Project 2
 
-permissions:
-  contents: write
+# on:
+#   push:
+#     branches:
+#       - development
+#   pull_request:
+#     branches:
+#       - main
 
-jobs:
-  lint-and-unit-test:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '18'
-    - name: Cache Node Modules
-      uses: actions/cache@v3
-      with:
-        path: node_modules
-        key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
-    - name: Install Dependencies
-      run: npm ci
-    - name: Run Linter
-      run: npx eslint ./src
-    - name: Run Unit Tests
-      run: npm run test:unit 
+# jobs:
+#   lint-and-unit-test:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
 
-  e2e-test:
-    runs-on: ubuntu-latest
-    needs: lint-and-unit-test # Ensure unit tests pass before running e2e
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '18'
-    - name: Cache Node Modules
-      uses: actions/cache@v3
-      with:
-        path: node_modules
-        key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
-    - name: Install Dependencies
-      run: npm ci
-    - name: Build for E2E Tests
-      run: npm run build
-    - name: Run E2E Tests (Cypress)
-      uses: cypress-io/github-action@v5
-      with:
-        start: npm run start # Or adjust based on your start script
-        wait-on: 'http://localhost:3000' # Or the URL your dev server runs on
-        build: npm run build
+#       - name: Use Node.js
+#         uses: actions/setup-node@v2
+#         with:
+#           node-version: '18'
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: [lint-and-unit-test, e2e-test]  # Only deploy if all tests pass
-    if: github.ref == 'refs/heads/main'    # Only deploy from the main branch
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '18'
-    - name: Cache Node Modules
-      uses: actions/cache@v3
-      with:
-        path: node_modules
-        key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
-    - name: Install Dependencies
-      run: npm ci
-    - name: Build for Production
-      run: npm run build
-    - name: Deploy to Netlify
-      uses: nwtgck/actions-netlify@v1.2
-      with:
-        publish-dir: './dist'
-        production-branch: main
-        netlify-auth-token: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+#       - name: Cache Node Modules
+#         uses: actions/cache@v3
+#         with:
+#           path: node_modules
+#           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+
+#       - name: Install Dependencies
+#         run: npm ci
+
+#       - name: Run Linter
+#         run: npx eslint ./src
+
+#       - name: Run Unit Tests
+#         run: npm run test:unit
+
+#   e2e-test:
+#     runs-on: ubuntu-latest
+#     needs: lint-and-unit-test # Ensure unit tests pass before running e2e
+#     steps:
+#       - uses: actions/checkout@v2
+
+#       - name: Use Node.js
+#         uses: actions/setup-node@v2
+#         with:
+#           node-version: '18'
+
+#       - name: Cache Node Modules
+#         uses: actions/cache@v3
+#         with:
+#           path: node_modules
+#           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+
+#       - name: Install Dependencies
+#         run: npm ci
+
+#       - name: Build for E2E Tests
+#         run: npm run build
+
+#       - name: Run E2E Tests (Cypress)
+#         uses: cypress-io/github-action@v5
+#         with:
+#           start: npm run start # Or adjust based on your start script
+#           wait-on: 'http://localhost:3000' # Or the URL your dev server runs on
+#           build: npm run build
+
+#   deploy:
+#     runs-on: ubuntu-latest
+#     needs: [lint-and-unit-test, e2e-test]  # Only deploy if all tests pass
+#     if: github.ref == 'refs/heads/main'    # Only deploy from the main branch
+#     steps:
+#       - uses: actions/checkout@v2
+
+#       - name: Use Node.js
+#         uses: actions/setup-node@v2
+#         with:
+#           node-version: '18'
+
+#       - name: Cache Node Modules
+#         uses: actions/cache@v3
+#         with:
+#           path: node_modules
+#           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+
+#       - name: Install Dependencies
+#         run: npm ci
+
+#       - name: Build for Production
+#         run: npm run build
+
+#       - name: Deploy to Netlify
+#         uses: nwtgck/actions-netlify@v1.2
+#         with:
+#           publish-dir: './dist'
+#           production-branch: main
+#           netlify-auth-token: ${{ secrets.NETLIFY_AUTH_TOKEN }}
