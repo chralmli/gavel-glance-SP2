@@ -12,21 +12,22 @@
         <nav class="container mx-auto flex flex-wrap justify-between items-center p-6">
             <div class=" flex items-center mr-6 logo"></div>
             <div class="block lg:hidden">
-                <button id="mobileButton" class="text-primary-cream focus:outline-none">
-                    <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
-                        <path d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
+                <button id="mobileButton" class="mobile-menu-button text-primary-cream focus:outline-none">
+                    <span class="sr-only">Open Menu</span>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
                 </button>
             </div>
-            <div id="mobileMenu" class="w-full hidden flex-grow lg:hidden">
+            <div id="mobileMenu" class="fixed top-20 left-0 bg-accent-blue z-20 w-full hidden flex-grow lg:hidden">
                 <div class="text-sm flex flex-col items-start">
                     <!-- Duplicate navigation links for mobile -->
-                    <a href="#home" class="text-accent-blue hover:text-gray-800 mx-2">Home</a>
-                    <a href="#about" class="text-accent-blue hover:text-gray-800 mx-2">About</a>
-                    <a href="#listings" class="text-accent-blue hover:text-gray-800 mx-2">All Listings</a>
-                    <a href="#contact" class="text-accent-blue hover:text-gray-800 mx-2">Contact</a>
-                    <a id="authLink" href="#login" class="text-accent-blue hover:text-blue-800-mx-2 px-4">Login</a>
-                    <a id="registerLink" href="#register" class="text-accent-blue hover:text-blue-800-mx-2 px-4">Register</a>
+                    <a href="#home" class="text-secondary-blue font-semibold hover:text-gray-800 mx-2 py-2">Home</a>
+                    <a href="#about" class="text-secondary-blue font-semibold hover:text-gray-800 mx-2 py-2">About</a>
+                    <a href="#listings" class="text-secondary-blue font-semibold hover:text-gray-800 mx-2 py-2">All Listings</a>
+                    <a href="#contact" class="text-secondary-blue font-semibold hover:text-gray-800 mx-2 py-2">Contact</a>
+                    <a id="authLink" href="#login" class="text-secondary-blue font-semibold hover:text-blue-800-mx-2 px-4">Login</a>
+                    <a id="registerLink" href="#register" class="text-secondary-blue font-semibold hover:text-blue-800-mx-2 px-4">Register</a>
                 </div>
             </div>
             <div class="navigation lg:flex hidden flex-grow items-center">
