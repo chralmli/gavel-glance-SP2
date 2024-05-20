@@ -159,26 +159,24 @@ export const listingsPage = async (page = 1, loadMore = false) => {
             appContainer = document.getElementById('appContainer');
             // Add modal HTML and pagination controls to the page
             appContainer.innerHTML = `
-            <div class="max-w-screen-xl mx-auto p-8">
+            <div class="max-w-screen-xl mx-auto p-6 sm:p-8">
                 <button id="openCreateListingModalButton" class="fixed bottom-8 right-8 bg-secondary-blue text-white hover:bg-transparent hover:text-secondary-blue rounded-full p-4 shadow-lg">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
                     </svg>
                 </button>
-                <div class="p-8">
+                <div class="p-0 sm:p-6">
                     <h1 class="text-4xl font-semibold text-gray-800 mb-6 text-center">All Listings</h1>
                     <div class="flex justify-center mb-6">
-                        <input type="text" id="searchInput" placeholder="Search Listings" class="px-4 py-2 border rounded-l-lg w-1/3">
+                        <input type="text" id="searchInput" placeholder="Search Listings" class="px-4 py-2 border w-full md:w-2/3 lg:w-1/3 rounded-l-lg">
                         <button id="searchButton" class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-r-lg">Search</button>
                     </div>
-                    <div class="flex justify-center mb-6">
-                        <div class="flex space-x-2">
-                            <p class="font-semibold text-gray-700 px-4 py-2 rounded">Filter items by:</p>
-                            <button id="filterByCreatedDate" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded">Newest First</button>
-                            <button id="filterByEndDate" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded">Ending Soon</button>
-                            <button id="filterByNumberOfBids" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded">Most Bids</button>
-                            <button id="clearFilters" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded">Clear Filters</button>
-                        </div>
+                    <div class="flex flex-col sm:flex-row justify-center mb-6 space-y-2 sm:space-y-0 sm:space-x-2">
+                        <p class="font-semibold text-gray-700 px-4 py-2 rounded">Filter items by:</p>
+                        <button id="filterByCreatedDate" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded">Newest First</button>
+                        <button id="filterByEndDate" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded">Ending Soon</button>
+                        <button id="filterByNumberOfBids" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded">Most Bids</button>
+                        <button id="clearFilters" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded">Clear Filters</button>
                     </div>
                     <div id="listingsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         ${renderListingsGrid(listings, userLoggedIn)}

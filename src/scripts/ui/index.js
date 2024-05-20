@@ -11,3 +11,12 @@ function setupNavigation() {
         });
     });
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const mobileButton = document.getElementById('mobileButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    mobileButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+});
