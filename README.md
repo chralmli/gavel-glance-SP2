@@ -1,6 +1,6 @@
 # Semester Project 2: Auction Website
 
-[Hosted Application Demo Link]  (Replace with your Netlify link when ready)
+[https://gavelglance.netlify.app/#home]
 
 This project is a front-end auction website built using [your chosen CSS framework] and Vite.js. It allows users to create listings, bid on items, and manage their credits.
 
@@ -18,7 +18,7 @@ This project is a front-end auction website built using [your chosen CSS framewo
 
 ## Project Overview
 
-This auction website connects to the Noroff API to provide a platform for users to buy and sell items. Registered users receive 1000 credits initially and can earn more by selling items. Unregistered users can browse listings, but only registered users can bid.
+This auction website connects to the Noroff API to provide a platform for users to buy and sell items. Registered users receive 1000 credits initially. Unregistered users can browse listings, but only registered users can bid.
 
 ## Features
 
@@ -28,14 +28,14 @@ This auction website connects to the Noroff API to provide a platform for users 
     - Avatar update
     - Credit balance display
 - **Listing Management:**
-    - Creation of listings with title, deadline, media gallery, and description
+    - Creation of listings with title, deadline, media, and description
 - **Bidding:**
     - Adding bids to other users' listings
     - Viewing bids made on a listing
 - **Searching:**
     - Unregistered users can search listings
 - **Additional Features (Optional):**
-    - [List any extra features you've implemented]
+    - Filter by recently created, ending soon, and by amount of bids
 
 ## User Stories
 
@@ -43,30 +43,30 @@ This auction website connects to the Noroff API to provide a platform for users 
 - As a registered user, I can log in and out of my account.
 - As a registered user, I can update my avatar image.
 - As a registered user, I can view my total credit balance.
-- As a registered user, I can create a listing with a title, deadline, media gallery, and description.
+- As a registered user, I can create a listing with a title, deadline, media, and description.
 - As a registered user, I can add a bid to another user's listing.
 - As a registered user, I can view all bids made on a specific listing.
 - As an unregistered user, I can search through listings to find items of interest.
 
 ## Technical Restrictions
 
-- **CSS Framework:** [Your chosen CSS framework] (version > [required version])
+- **CSS Framework:** [Tailwind CSS] (version > [3.4.3])
 - **Static Host:** Netlify
-- **Design Application:** [Your chosen design application]
-- **Planning Application:** [Your chosen planning application]
+- **Design Application:** [Figma]
+- **Planning Application:** [Kanban Board & Gantt Chart]
 
 ## Approved Resources
 
-- **CSS Processors:** SASS/SCSS, PostCSS
+- **CSS Processors:** Tailwind CSS, PostCSS
 - **Hosting Services:** Netlify
 - **Design Applications:** Adobe XD, Figma, Sketch
 - **Planning Applications:** Trello, GitHub Projects
 
 ## Setup & Running Locally
 
-1. **Clone the repository:** `git clone [Your repository URL]`
+1. **Clone the repository:** `git clone [https://github.com/chralmli/gavel-glance-SP2]`
 2. **Install dependencies:** `npm install`
-3. **Start development server:** `npm run start`
+3. **Start development server:** `npm run dev`
 
 ## Testing
 
@@ -75,10 +75,10 @@ This auction website connects to the Noroff API to provide a platform for users 
 
 ## Project Management
 
-- **Gantt Chart:** [Link to your Gantt chart]
-- **Design Prototype:** [Link to your design prototype]
-- **Style Guide:** [Link to your style guide]
-- **Kanban Project Board:** [Link to your Kanban board]
+- **Gantt Chart:** [[Link to your Gantt chart](https://app.teamgantt.com/projects/gantt?ids=3932185)]
+- **Design Prototype:** [[Link to your design prototype](https://www.figma.com/proto/palCV8vPByLAx7UNvjQMiD/Auction-WebsitePrototype?page-id=0%3A1&type=design&node-id=7-9&viewport=396%2C456%2C0.36&t=fR57zrO6EuP9H00E-1&scaling=scale-down)]
+- **Style Guide:** [[Link to your style guide](https://www.figma.com/proto/OsGtXBheePyh6yKPDWe2Gd/GavelGlance-Styleguide?page-id=0%3A1&node-id=1-2&viewport=1056%2C675%2C1.02&t=YSzUg7RHte8Q2TP7-1&scaling=min-zoom)]
+- **Kanban Project Board:** [[Link to your Kanban board](https://trello.com/invite/b/jijdZPox/ATTI831ebe60bb9a16e4f441acc540931309FD56E99A/semester-project-2-auction-website)]
 
 ## Deployment
 
