@@ -1,8 +1,8 @@
 # Semester Project 2: Auction Website
 
-[https://gavelglance.netlify.app/#home]
+![Screenshot](src/assets/media/auction-mockup.png)
 
-This project is a front-end auction website built using [your chosen CSS framework] and Vite.js. It allows users to create listings, bid on items, and manage their credits.
+This project is a front-end auction website built using **Tailwind CSS** and **Vite.js**. It allows users to create listings, bid on items, and manage their credits. Designed as a professional portfolio piece, this project demonstrates the application of modern web development practices, integration with APIs, and responsive design.
 
 ## Table of Contents
 
@@ -13,8 +13,9 @@ This project is a front-end auction website built using [your chosen CSS framewo
 - [Approved Resources](#approved-resources)
 - [Setup & Running Locally](#setup--running-locally)
 - [Testing](#testing)
-- [Project Management](#project-management)
 - [Deployment](#deployment)
+- [Contact](#contact)
+- [License](#license)
 
 ## Project Overview
 
@@ -50,10 +51,10 @@ This auction website connects to the Noroff API to provide a platform for users 
 
 ## Technical Restrictions
 
-- **CSS Framework:** [Tailwind CSS] (version > [3.4.3])
+- **CSS Framework:** Tailwind CSS (version > 3.4.3)
 - **Static Host:** Netlify
-- **Design Application:** [Figma]
-- **Planning Application:** [Kanban Board & Gantt Chart]
+- **Design Application:** Figma
+- **Planning Application:** Kanban Board & Gantt Chart
 
 ## Approved Resources
 
@@ -64,22 +65,43 @@ This auction website connects to the Noroff API to provide a platform for users 
 
 ## Setup & Running Locally
 
-1. **Clone the repository:** `git clone [https://github.com/chralmli/gavel-glance-SP2]`
-2. **Install dependencies:** `npm install`
-3. **Start development server:** `npm run dev`
+1. **Clone the repository:** 
+    ```bash
+    git clone https://github.com/chralmli/gavel-glance-SP2
+    ```
+
+2. **Navigate to the project directory:**
+    ```bash
+    cd gavel-glance-SP2
+    ```
+
+3. **Install dependencies:**
+    ```bash
+    npm install
+    ```
+
+4. **Start development server:**
+    ```bash
+    npm run dev
+    ```
 
 ## Testing
 
 - **Unit Tests:** Run `npm run test:unit` to execute Jest unit tests.
 - **End-to-end Tests:** Run `npm run test:e2e` to execute Cypress end-to-end tests.
 
-## Project Management
-
-- **Gantt Chart:** [[Link to your Gantt chart](https://app.teamgantt.com/projects/gantt?ids=3932185)]
-- **Design Prototype:** [[Link to your design prototype](https://www.figma.com/proto/palCV8vPByLAx7UNvjQMiD/Auction-WebsitePrototype?page-id=0%3A1&type=design&node-id=7-9&viewport=396%2C456%2C0.36&t=fR57zrO6EuP9H00E-1&scaling=scale-down)]
-- **Style Guide:** [[Link to your style guide](https://www.figma.com/proto/OsGtXBheePyh6yKPDWe2Gd/GavelGlance-Styleguide?page-id=0%3A1&node-id=1-2&viewport=1056%2C675%2C1.02&t=YSzUg7RHte8Q2TP7-1&scaling=min-zoom)]
-- **Kanban Project Board:** [[Link to your Kanban board](https://trello.com/invite/b/jijdZPox/ATTI831ebe60bb9a16e4f441acc540931309FD56E99A/semester-project-2-auction-website)]
 
 ## Deployment
 
 This project is deployed to Netlify and will automatically update upon successful completion of the CI pipeline.
+
+## Contact
+
+For any inquiries or feedback, feel free to reach out:
+
+- **GitHub**: [yourusername](https://github.com/chralmli)
+- **LinkedIn**: [Your Name](https://www.linkedin.com/in/christian-almli-4b82b8196/)
+
+## License
+
+This project is not licensed for public use. Contact me for details.

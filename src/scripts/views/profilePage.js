@@ -8,7 +8,7 @@ export const profilePage = async () => {
     const credits = await getUserCredits();
 
     appContainer.innerHTML = `
-        <div class="bg-secondary-blue bg-cover text-white py-8">
+        <div class="bg-secondary-blue bg-cover text-white p-4 lg:p-8">
             <div class="container mx-auto flex justify-between items-center">
                 <div class="flex">
                     <img src="${profile.avatar.url}" alt="${profile.avatar.alt}" class="w-24 h-24 rounded-full border-4 border-primary-cream mr-4">
@@ -19,7 +19,7 @@ export const profilePage = async () => {
                 </div>
             </div>
         </div>
-        <div class="container mx-auto py-8">
+        <div class="container mx-auto px-4 lg:px-8">
             <div class="bg-primary-cream p-6 rounded-lg shadow-lg">
                 <h2 class="font-heading text-2xl mb-2">Biography</h2>
                 <p>${profile.bio}</p>
