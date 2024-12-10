@@ -99,8 +99,8 @@ This project is deployed to Netlify and will automatically update upon successfu
 
 For any inquiries or feedback, feel free to reach out:
 
-- **GitHub**: [yourusername](https://github.com/chralmli)
-- **LinkedIn**: [Your Name](https://www.linkedin.com/in/christian-almli-4b82b8196/)
+- **GitHub**: [chralmli](https://github.com/chralmli)
+- **LinkedIn**: [Christian Almli](https://www.linkedin.com/in/christian-almli-4b82b8196/)
 
 ## License
 
